@@ -1,8 +1,13 @@
 const { mockDb, mockModel } = require('./db.mock');
 const { list, get, destroy } = require('../products');
+const productTestHelper = require('./test-utils/productTestHelper');
+
 jest.mock('../db', () => mockDb);
 
 describe('Product Module', () => {
+    beforeAll(async () => await productTestHelper.setupTestData());
+    afterAll(async () => await productTestHelper.cleanupTestData());
+
     beforeEach(() => jest.clearAllMocks());
 
     test('should list products', async () => {
